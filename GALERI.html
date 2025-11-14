@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produk Sepatu</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+  }
+
+  header {
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 30px;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    gap: 30px;
+    background: white;
+    border-bottom: 2px solid #ddd;
+    position: relative;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  nav a:hover {
+    color: #ff4500;
+  }
+
+  /* Dropdown Styles */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-btn {
+    background: #ff4500;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.3s;
+  }
+
+  .dropdown-btn:hover {
+    background: #e03d00;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background: white;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    z-index: 1;
+    top: 100%;
+    margin-top: 5px;
+    overflow: hidden;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background 0.2s;
+  }
+
+  .dropdown-content a:hover {
+    background: #f1f1f1;
+    color: #ff4500;
+  }
+
+  .dropdown.active .dropdown-content {
+    display: block;
+    animation: fadeIn 0.3s;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .product {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  }
+
+  .product img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .product h3 {
+    color: #222;
+    margin: 15px 0 10px;
+  }
+
+  .product p {
+    color: #ff4500;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .category-badge {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  /* Hidden products - muncul saat filter kategori */
+  .product.extra-product {
+    display: none;
+  }
+
+  footer {
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+  }
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Produk Sepatu</h1>
+</header>
+
+<nav>
+  <a href="INDEX.html">Beranda</a>
+  <a href="GALERI.html">Produk</a>
+  
+  <!-- Dropdown Menu -->
+  <div class="dropdown" id="categoryDropdown">
+    <button class="dropdown-btn">Kategori Sepatu ▼</button>
+    <div class="dropdown-content">
+      <a href="#" onclick="filterProducts('semua'); return false;">Semua Produk</a>
+      <a href="#" onclick="filterProducts('running'); return false;">Sepatu Running</a>
+      <a href="#" onclick="filterProducts('casual'); return false;">Sepatu Casual</a>
+      <a href="#" onclick="filterProducts('sport'); return false;">Sepatu Sport</a>
+    </div>
+  </div>
+  
+  <a href="KONTAK TTT.html">Kontak</a>
+</nav>
+
+<section class="product-container" id="productContainer">
+
+  <!-- Produk Utama (Always Visible di awal) -->
+  <div class="product main-product" data-category="running">
+    <span class="category-badge">Running</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\runer.jpg" alt="Air Runner X1">
+    <h3>Air Runner X1</h3>
+    <p>Rp 750.000</p>
+  </div>
+
+  <div class="product main-product" data-category="casual">
+    <span class="category-badge">Casual</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\streetwear.webp" alt="Streetwear Pro">
+    <h3>Streetwear Pro</h3>
+    <p>Rp 1.000.000</p>
+  </div>
+
+  <div class="product main-product" data-category="casual">
+    <span class="category-badge">Casual</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\urbannn.jfif" alt="Urban Sneakers">
+    <h3>Urban Sneakers</h3>
+    <p>Rp 700.000</p>
+  </div>
+
+  <div class="product main-product" data-category="sport">
+    <span class="category-badge">Sport</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\running.jfif" alt="SportRunner Elite">
+    <h3>SportRunner Elite</h3>
+    <p>Rp 760.000</p>
+  </div>
+
+  <!-- Produk Tambahan RUNNING (Hidden, muncul pas klik kategori Running) -->
+  <div class="product extra-product" data-category="running">
+    <span class="category-badge">Running</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\speed runner.jfif" alt="Speed Runner Pro">
+    <h3>Speed Runner Pro</h3>
+    <p>Rp 600.000</p>
+  </div>
+
+  <div class="product extra-product" data-category="running">
+    <span class="category-badge">Running</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\running.jfif" alt="Marathon Elite">
+    <h3>Marathon Elite</h3>
+    <p>Rp 650.000</p>
+  </div>
+
+  <div class="product extra-product" data-category="running">
+    <span class="category-badge">Running</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\swift.jfif" alt="Swift Runner">
+    <h3>Swift Runner</h3>
+    <p>Rp 660.000</p>
+  </div>
+
+  <!-- Produk Tambahan CASUAL (Hidden, muncul pas klik kategori Casual) -->
+  <div class="product extra-product" data-category="casual">
+    <span class="category-badge">Casual</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\daily.webp" alt="Daily Comfort">
+    <h3>Daily Comfort</h3>
+    <p>Rp 500.000</p>
+  </div>
+
+  <div class="product extra-product" data-category="casual">
+    <span class="category-badge">Casual</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\street.webp" alt="Street Style">
+    <h3>Street Style</h3>
+    <p>Rp 450.000</p>
+  </div>
+
+  <div class="product extra-product" data-category="casual">
+    <span class="category-badge">Casual</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\urban.jfif" alt="Urban Classic">
+    <h3>Urban Classic</h3>
+    <p>Rp 520.000</p>
+  </div>
+
+  <div class="product extra-product" data-category="casual">
+    <span class="category-badge">Casual</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\chill.jfif" alt="Chill Sneakers">
+    <h3>Chill Sneakers</h3>
+    <p>Rp 360.000</p>
+  </div>
+
+  <!-- Produk Tambahan SPORT (Hidden, muncul pas klik kategori Sport) -->
+  <div class="product extra-product" data-category="sport">
+    <span class="category-badge">Sport</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\images (8).jfif" alt="Athletic Pro">
+    <h3>Athletic Pro</h3>
+    <p>Rp 780.000</p>
+  </div>
+
+  <div class="product extra-product" data-category="sport">
+    <span class="category-badge">Sport</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\gym.jfif" alt="Gym Master">
+    <h3>Gym Master</h3>
+    <p>Rp 620.000</p>
+  </div>
+
+  <div class="product extra-product" data-category="sport">
+    <span class="category-badge">Sport</span>
+    <img src="c:\Users\Hype GLK\Documents\web tiara\training.webp" alt="Training Beast">
+    <h3>Training Beast</h3>
+    <p>Rp 850.000</p>
+  </div>
+
+</section>
+
+<footer>
+  © 2025 Sporty Shoes Store
+</footer>
+
+<script>
+  // Toggle dropdown saat diklik
+  const dropdown = document.getElementById('categoryDropdown');
+  const dropdownBtn = dropdown.querySelector('.dropdown-btn');
+  
+  dropdownBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    dropdown.classList.toggle('active');
+  });
+
+  // Tutup dropdown jika klik di luar
+  document.addEventListener('click', function(e) {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove('active');
+    }
+  });
+
+  // Filter produk berdasarkan kategori
+  function filterProducts(category) {
+    const mainProducts = document.querySelectorAll('.main-product');
+    const extraProducts = document.querySelectorAll('.extra-product');
+    
+    if (category === 'semua') {
+      // Tampilkan hanya 4 produk utama
+      mainProducts.forEach(product => {
+        product.style.display = 'block';
+      });
+      extraProducts.forEach(product => {
+        product.style.display = 'none';
+      });
+    } else {
+      // Sembunyikan semua produk dulu
+      mainProducts.forEach(product => {
+        product.style.display = 'none';
+      });
+      extraProducts.forEach(product => {
+        product.style.display = 'none';
+      });
+      
+      // Tampilkan produk sesuai kategori (main + extra)
+      const allProducts = document.querySelectorAll('.product');
+      allProducts.forEach(product => {
+        if (product.getAttribute('data-category') === category) {
+          product.style.display = 'block';
+        }
+      });
+    }
+    
+    // Tutup dropdown setelah memilih
+    dropdown.classList.remove('active');
+  }
+</script>
+
+</body>
+</html>
